@@ -1,0 +1,13 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+
+@{
+    ViewBag.Title = "title";
+
+}
+
+<h2>title</h2>
+<form method="post" asp-action="Edit">
+    <input type="text" id="Id" name="Id" asp-for="Id">
+    name: <input type="text" id="NAme" name="Name" asp-for="Name" >
+    <input type="submit" />
+</form>

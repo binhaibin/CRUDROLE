@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{
+    ViewBag.Title = "title";
+
+}
+<h2>title</h2>
+
+<div class="container">
+    <form asp-action="Create" method="post">
+        name: <input type="text" id="Name" name="Name">
+
+        <input type="submit" />
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>NORMALIZEDNAME</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+
+                    <td> @r.Id</td>
+                    <td> @r.Name</td>
+                    <td> @r.NormalizedName</td>
+                    <td>
+                        <button class="bthDelete" id="@r.Id" value="@r.Name">delete</button>
+                        <a asp-action="Edit" asp-route-id="@r.Id">Edit</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(Document).ready(function () {
+        $(".bthDelete").click(function () {
+            var currentBtn = $(this);
+            const nameRole = currentBtn.parent().parent().find("td:eq(2)").text();
+            if (confirm("do you want to delete product")) {
+                $.ajax({
+                    url: "/Roll/Delete?Id=" + currentBtn.attr("id")/* + "&Name=" + currentBtn.attr("value")*/,
+                    method: "DELETE",
+                    success: function () {
+                        $(".alert-success").text("delete success");
+                        currentBtn.closest('tr').remove();
+                    },
+                    error: function () {
+                        $(".alert-error").text("delete fail");
+                    }
+                });
+            }
+        });
+    })
+</script>
